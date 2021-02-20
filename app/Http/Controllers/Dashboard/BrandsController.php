@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SupplyRequest;
+use App\Models\Brand;
 
-class RequestsController extends Controller
+
+class BrandsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +16,11 @@ class RequestsController extends Controller
      */
     public function index()
     {
-        $requests = SupplyRequest::simplePaginate(10);
 
-        return view('dashboard.requests.index', [
-            'requests' => $requests,
+        $brands = Brand::simplePaginate(10);
+
+        return view('dashboard.brands.index', [
+            'brands' => $brands
         ]);
     }
 
@@ -29,7 +31,7 @@ class RequestsController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.brands.create');
     }
 
     /**
@@ -40,7 +42,18 @@ class RequestsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $create = Brand::create($request->all());
+
+
+        if (!$create) {
+            return redirect()->back()->with([
+                'error' => 'There is something error! Please try again later.',
+            ]);
+        }
+
+        return redirect(route('dashboard.brands'))->with([
+            'success' => 'The brand has been successfully created!',
+        ]);
     }
 
     /**
@@ -51,10 +64,10 @@ class RequestsController extends Controller
      */
     public function show($id)
     {
-        $requestDetail = SupplyRequest::find($id);
+        $brand = Brand::find($id);
 
-        return view('dashboard.requests.show', [
-            'request' => $requestDetail,
+        return view('dashboard.brands.show', [
+            'brand' => $brand
         ]);
     }
 
@@ -66,10 +79,10 @@ class RequestsController extends Controller
      */
     public function edit($id)
     {
-        $requestDetail = SupplyRequest::find($id);
+        $brand = Brand::find($id);
 
-        return view('dashboard.requests.edit', [
-            'request' => $requestDetail,
+        return view('dashboard.brands.edit', [
+            'brand' => $brand
         ]);
     }
 
@@ -82,26 +95,25 @@ class RequestsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $brand = Brand::find($id);
 
-        $supplyRequest = SupplyRequest::find($id);
-
-        if(!$supplyRequest){
+        if(!$brand){
             return redirect()->back()->with([
                 'error' => 'There is something error! Please try again later.',
             ]);
         }
 
-        $supplyRequest->update($request->all());
-        $update = $supplyRequest->save();
+        $brand->update($request->all());
+        $update = $brand->save();
 
         if (!$update) {
             return redirect()->back()->with([
                 'error' => 'There is something error! Please try again later.',
-            ]);
+            ]); 
         }
 
         return redirect()->back()->with([
-            'success' => 'The request has been successfully updated!',
+            'success' => 'The brand has been successfully updated!',
         ]);
     }
 
@@ -113,6 +125,17 @@ class RequestsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $destroy = Brand::destroy($id);
+
+        if ($destroy) {
+            return redirect(route('dashboard.brands'))
+                ->with('success', 'The brand is successfully removed!');
+        } else {
+            return redirect(route('dashboard.brands'))
+                ->with(
+                    'error',
+                    'There is something error, please try again later!'
+                );
+        }
     }
 }

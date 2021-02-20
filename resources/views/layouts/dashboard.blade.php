@@ -21,7 +21,7 @@
                 <div class="d-flex">
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
-                        <a href="index.html" class="logo logo-dark">
+                        <a href="{{route('index')}}" class="logo logo-dark">
                             <span class="logo-sm">
                                 <img src="/assets/img\logo-three.png">
                             </span>
@@ -30,7 +30,7 @@
                             </span>
                         </a>
 
-                        <a href="index.html" class="logo logo-light">
+                        <a href="{{ route('index') }}" class="logo logo-light">
                             <span class="logo-sm">
                                 <img src="/assets/img\logo-three.png">
                             </span>
@@ -57,7 +57,7 @@
 
                 <div class="d-flex">
 
-                    
+
 
                     <div class="dropdown d-none d-lg-inline-block ms-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -65,7 +65,7 @@
                         </button>
                     </div>
 
-                  
+
 
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -109,18 +109,32 @@
                         <li class="menu-title" key="t-menu">Menu</li>
 
                         <li>
-                            <a href="{{route('dashboard.users')}}" class="waves-effect">
+                            <a href="{{ route('dashboard.users') }}" class="waves-effect">
                                 <i class="bx bx-user"></i>
-                                <span key="t-dashboards">Users</span>
+                                <span key="t-users">Users</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="{{route('dashboard.requests')}}" class="waves-effect">
+                            <a href="{{ route('dashboard.requests') }}" class="waves-effect">
                                 <i class="bx bx-home-circle"></i>
-                                <span key="t-dashboards">Requests</span>
+                                <span key="t-requests">Requests</span>
                             </a>
                         </li>
+
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="bx bxs-building"></i>
+                                <span key="t-ecommerce">Brands</span>
+                            </a>
+                            <ul class="sub-menu mm-collapse" aria-expanded="false">
+                                <li><a href="{{ route('dashboard.brands') }}" key="t-products">List</a></li>
+                                <li><a href="{{ route('dashboard.brands.create') }}" key="t-product-detail">Create</a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
                 <!-- Sidebar -->

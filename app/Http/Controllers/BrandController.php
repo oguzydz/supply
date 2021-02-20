@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SupplyRequest;
 
-class RequestsController extends Controller
+use App\Models\Brand;
+
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class RequestsController extends Controller
      */
     public function index()
     {
-        $requests = SupplyRequest::simplePaginate(10);
+        $brands = Brand::simplePaginate(10);
 
-        return view('dashboard.requests.index', [
-            'requests' => $requests,
+        return view('dashboard.brands.index', [
+            'brands' => $brands,
         ]);
     }
 
@@ -29,7 +29,7 @@ class RequestsController extends Controller
      */
     public function create()
     {
-        //
+        return 
     }
 
     /**
@@ -51,11 +51,7 @@ class RequestsController extends Controller
      */
     public function show($id)
     {
-        $requestDetail = SupplyRequest::find($id);
-
-        return view('dashboard.requests.show', [
-            'request' => $requestDetail,
-        ]);
+        //
     }
 
     /**
@@ -66,11 +62,7 @@ class RequestsController extends Controller
      */
     public function edit($id)
     {
-        $requestDetail = SupplyRequest::find($id);
-
-        return view('dashboard.requests.edit', [
-            'request' => $requestDetail,
-        ]);
+        //
     }
 
     /**
@@ -82,27 +74,7 @@ class RequestsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $supplyRequest = SupplyRequest::find($id);
-
-        if(!$supplyRequest){
-            return redirect()->back()->with([
-                'error' => 'There is something error! Please try again later.',
-            ]);
-        }
-
-        $supplyRequest->update($request->all());
-        $update = $supplyRequest->save();
-
-        if (!$update) {
-            return redirect()->back()->with([
-                'error' => 'There is something error! Please try again later.',
-            ]);
-        }
-
-        return redirect()->back()->with([
-            'success' => 'The request has been successfully updated!',
-        ]);
+        //
     }
 
     /**

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RequestRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SupplyRequest;
-
+use App\Models\Brand;
 class RequestController extends Controller
 {
     /**
@@ -31,7 +31,8 @@ class RequestController extends Controller
     public function index()
     {
         $requests = SupplyRequest::all();
-        $title = "All Requests";
+        $title = 'All Requests';
+
 
         return view('request.all')->with(compact('requests', 'title'));
     }
@@ -43,8 +44,10 @@ class RequestController extends Controller
      */
     public function myRequests()
     {
-        $requests = User::find(Auth::user()->id)->requests()->get();
-        $title = "My Requests";
+        $requests = User::find(Auth::user()->id)
+            ->requests()
+            ->get();
+        $title = 'My Requests';
 
         return view('request.my')->with(compact('requests', 'title'));
     }
@@ -58,9 +61,11 @@ class RequestController extends Controller
     {
         $conditions = Condition::all();
         $manufacturers = Manufacturer::all();
-        $title = "Basic Info";
+        $title = 'Basic Info';
 
-        return view('request.create')->with(compact('title', 'manufacturers', 'conditions'));
+        return view('request.create')->with(
+            compact('title', 'manufacturers', 'conditions')
+        );
     }
 
     /**
@@ -71,7 +76,9 @@ class RequestController extends Controller
      */
     public function store(RequestRequest $request)
     {
-        $newSupplyRequest = SupplyRequest::create($request->all() + ['user_id' => Auth::user()->id, 'brand_id' => 1]);
+        $newSupplyRequest = SupplyRequest::create(
+            $request->all() + ['user_id' => Auth::user()->id, 'brand_id' => 1]
+        );
 
         foreach ($request->conditions as $condition) {
             $newSupplyRequest->conditions()->attach($condition);
@@ -81,8 +88,9 @@ class RequestController extends Controller
             $newSupplyRequest->manufacturers()->attach($manufacturer);
         }
 
-        return redirect()->route('myRequests')
-        ->with('success', config('supply.create_message'));
+        return redirect()
+            ->route('myRequests')
+            ->with('success', config('supply.create_message'));
     }
 
     /**
@@ -96,6 +104,34 @@ class RequestController extends Controller
         $request = SupplyRequest::findOrFail($id);
 
         return view('request.show')->with(compact('request'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(Request $request)
+    {
+        $brand = $request->brand ?? null;
+        $model = $request->model ?? null;
+        $part_no = $request->part_no ?? null;
+
+        $requests = SupplyRequest::leftJoin(
+            'brands',
+            'brands.id',
+            '=',
+            'requests.brand_id'
+        )
+            ->where('model', 'LIKE', '%' . $model . '%')
+            ->orWhere('name', 'LIKE', '%' . $brand . '%')
+            ->orWhere('part_no', 'LIKE', '%' . $part_no . '%')
+            ->get();
+
+        $title = 'Filtered Requests';
+
+        return view('request.all')->with(compact('requests'));
     }
 
     /**
@@ -132,15 +168,15 @@ class RequestController extends Controller
         $destroy = SupplyRequest::destroy($id);
 
         if ($destroy) {
-            return redirect(route('myRequests'))
-                ->with('success', 'The request is successfully removed!');
+            return redirect(route('myRequests'))->with(
+                'success',
+                'The request is successfully removed!'
+            );
         } else {
-            return redirect(route('myRequests'))
-                ->with(
-                    'error',
-                    'There is something error, please try again later!'
-                );
+            return redirect(route('myRequests'))->with(
+                'error',
+                'There is something error, please try again later!'
+            );
         }
-  
     }
 }

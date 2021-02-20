@@ -18,7 +18,7 @@ class UsersController extends Controller
     {
         $users = User::simplePaginate(10);
 
-        return view('dashboard.users', [
+        return view('dashboard.users.index', [
             'users' => $users,
         ]);
     }

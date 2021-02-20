@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Condition;
 use App\Models\Manufacturer;
-
+use App\Models\Brand;
 class SupplyRequest extends Model
 {
     use HasFactory;
@@ -49,6 +49,12 @@ class SupplyRequest extends Model
     {
         return $this->belongsToMany(Condition::class, 'requests_conditions', 'request_id', 'condition_id');
     }
+
+    // public function brand()
+    // {
+    //     return $this->belongsToMany(Brand::class, 'brands', 'id', 'brand_id');
+
+    // }
 
     public function manufacturers()
     {

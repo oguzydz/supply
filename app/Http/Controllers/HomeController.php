@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SupplyRequest;
-
+use App\Models\Brand;
 class HomeController extends Controller
 {
     /**
@@ -16,7 +16,8 @@ class HomeController extends Controller
     {
         $requests = SupplyRequest::limit(5)->get();
         $title = "All Requests";
+        $brands = Brand::all();
 
-        return view('home')->with(compact('requests', 'title'));
+        return view('home')->with(compact('requests', 'title', 'brands'));
     }
 }

@@ -10,26 +10,27 @@
                     <div class="d-table-cell">
                         <h1>Send a Request For <span>Spare Parts</span></h1>
                         <div class="banner-form-area">
-                            <form>
+                            <form method="POST" action="{{ route('filterRequest') }}">
+                                @csrf
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <select>
-                                                <option>Brand</option>
-                                                <option>Another option</option>
-                                                <option>A option</option>
-                                                <option>Potato</option>
+                                            <select name="brand">
+                                                @foreach ($brands as $brand)
+                                                    <option>{{ $brand['name'] }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group two">
-                                            <input type="text" class="form-control" placeholder="Model">
+                                            <input type="text" class="form-control" placeholder="Model" name="model">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group two">
-                                            <input type="text" class="form-control" placeholder="Part No">
+                                            <input type="text" class="form-control" placeholder="Part No" name="part_no">
                                         </div>
                                     </div>
                                 </div>

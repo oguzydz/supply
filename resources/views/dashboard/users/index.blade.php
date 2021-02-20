@@ -4,20 +4,19 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">REQUESTS</h4>
+                <h4 class="mb-sm-0 font-size-18">USERS</h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">List</a></li>
-                        <li class="breadcrumb-item active">Requests</li>
+                        <li class="breadcrumb-item active">Users</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
-    
-    
     <div class="row">
         <div class="col-12">
+
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -28,26 +27,26 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Brand</th>
-                                        <th>Model</th>
-                                        <th>Part No</th>
-                                        <th>Quantity</th>
+                                        <th>Name</th>
+                                        <th>E-mail</th>
+                                        <th>Company</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($requests as $request)
+                                    @foreach ($users as $user)
                                         <tr>
-                                            <th scope="row">{{ $request->id }}</th>
-                                            <td>{{ $request->brand }}</td>
-                                            <td>{{ $request->model }}</td>
-                                            <td>{{ $request->part_no }}</td>
-                                            <td>{{ $request->qty }}</td>
+                                            <th scope="row">{{ $user->id }}</th>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
                                             <td>
-                                                <a href="{{ route('dashboard.requests.detail', [$request->id]) }}"
-                                                    role="button" class="btn btn-light btn-sm">Detail</a>
-                                                <a href="{{ route('dashboard.requests.edit', [$request->id]) }}"
-                                                    role="button" class="btn btn-light btn-sm">Edit</a>
+                                                @if (!$user->company) <span
+                                                    class="badge bg-danger">No-brand</span> @else {{ $user->company }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('dashboard.users.show', [$user->id]) }}" role="button"
+                                                    class="btn btn-light btn-sm">Show</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -62,7 +61,7 @@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
-                    {{ $requests->links() }}
+                    {{ $users->links() }}
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
                 <h4 class="mb-sm-0 font-size-18">{{ $user->name }}</h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Detail</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Show</a></li>
                         <li class="breadcrumb-item active">Users</li>
                     </ol>
                 </div>
@@ -69,7 +69,7 @@
                                 <tr>
                                     <td class="w-25">Action</td>
                                     <td><a class="btn btn-danger"  role="button"
-                                            href="{{ route('dashboard.users.remove', [$user->id]) }}">Delete</a></td>
+                                            href="{{ route('dashboard.users.destroy', [$user->id]) }}">Delete</a></td>
                                 </tr>
                             </tbody>
                         </table>
