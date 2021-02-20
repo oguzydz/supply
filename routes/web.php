@@ -35,6 +35,7 @@ Route::prefix('requests')->group(function () {
     Route::get('/create', [RequestController::class, 'create'])->name('createRequest');
     Route::post('/store', [RequestController::class, 'store'])->name('storeRequest');
     Route::get('/show/{id}', [RequestController::class, 'show'])->name('showRequest');
+    Route::get('/destroy/{id}', [RequestController::class, 'destroy'])->name('destroyRequest');
 });
 
 Route::prefix('dashboard')->middleware('admin')->group(function(){

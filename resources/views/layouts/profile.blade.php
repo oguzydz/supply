@@ -35,7 +35,7 @@
                             </div>
                         </a>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                                                 document.getElementById('logout-form').submit();">
                             <div class="profile-list">
                                 <i class="bx bx-log-out"></i>
                                 Logout
@@ -48,6 +48,26 @@
                 </div>
 
                 <div class="col-lg-8">
+                    @if (\Session::has('success'))
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-success" role="alert">
+                                    {!! \Session::get('success') !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if (\Session::has('error'))
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-danger" role="alert">
+                                    {!! \Session::get('error') !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @yield('profileContent')
                 </div>
             </div>

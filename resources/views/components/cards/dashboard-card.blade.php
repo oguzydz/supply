@@ -1,7 +1,8 @@
 <div class="tab-pane fade active show" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
     <div class="employer-item">
         <a href="{{ route('showRequest', $cardData->id) }}">
-            <img src="https://cdn0.iconfinder.com/data/icons/business-e-commerce-logistics-import-export/500/boxglobe-512.png" width="50px">
+            <img src="https://cdn0.iconfinder.com/data/icons/business-e-commerce-logistics-import-export/500/boxglobe-512.png"
+                width="50px">
             <h3>#{{ $cardData->id }}</h3>
             <ul>
                 <li>
@@ -20,8 +21,14 @@
                 <strong>QTY:</strong>
                 {{ $cardData->qty }}
             </p>
-            <span class="span-one" style="background">View More</span>
-            <span class="span-two">New</span>
+            <div class="row">
+                <div class="col">
+                    <span class="span-one">View More</span>
+                </div>
+                <div class="col">
+                    <a href="{{ route('destroyRequest', $cardData->id) }}"><span class="span-two">Remove</span></a>
+                </div>
+            </div>
         </a>
     </div>
 </div>

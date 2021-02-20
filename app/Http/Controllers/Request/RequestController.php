@@ -129,6 +129,18 @@ class RequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $destroy = SupplyRequest::destroy($id);
+
+        if ($destroy) {
+            return redirect(route('myRequests'))
+                ->with('success', 'The request is successfully removed!');
+        } else {
+            return redirect(route('myRequests'))
+                ->with(
+                    'error',
+                    'There is something error, please try again later!'
+                );
+        }
+  
     }
 }
