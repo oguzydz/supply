@@ -24,6 +24,7 @@
             <div class="row">
                 <div class="col">
                     <span class="span-one">View More</span>
+                    <a href="{{ route('showQuotation', $cardData->id) }}"><span class="span-one">View Quotations</span></a>
                 </div>
                 <div class="col">
                     <a href="{{ route('destroyRequest', $cardData->id) }}"><span class="span-two">Remove</span></a>

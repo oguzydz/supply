@@ -9,10 +9,22 @@
                 <h2>Add New Request</h2>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="brand">{{ __('Brand:') }}</label>
-                            <input type="text" class="form-control @error('brand') is-invalid @enderror" id="brand"
-                                name="brand" value="{{ old('brand') }}" required autofocus>
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <label for="brand">{{ __('Brand:') }}</label>
+                            </div>
+                            <div class="col-12">
+                                <select name="brand" class="form-control form-select w-100" aria-label="Default select example">
+                                    @if (old('brand'))
+                                        <option>{{ old('brand') }}</option>
+                                    @endif
+                                    @foreach ($brands as $brand)
+                                        <option>{{ $brand['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             @error('brand')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -60,7 +72,7 @@
                         <div class="form-group">
                             <label for="qty">{{ __('QTY:') }}</label>
                             <input type="number" class="form-control @error('qty') is-invalid @enderror" id="qty" name="qty"
-                            value="{{ old('qty') }}" required autofocus>
+                                value="{{ old('qty') }}" required autofocus>
                             @error('qty')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -74,8 +86,9 @@
                             <label for="condition">{{ __('Condition:') }}</label>
                             <div class="form-check">
                                 @foreach ($conditions as $condition)
-                                    <span class="{{ !$loop->first ? 'ml-5' : ''}}">
-                                        <input class="form-check-input" type="checkbox" name="conditions[]" value="{{ $condition->id }}" id="{{ $condition->id }}">
+                                    <span class="{{ !$loop->first ? 'ml-5' : '' }}">
+                                        <input class="form-check-input" type="checkbox" name="conditions[]"
+                                            value="{{ $condition->id }}" id="{{ $condition->id }}">
                                         <label class="form-check-label" for="{{ $condition->id }}">
                                             {{ $condition->name }}
                                         </label>
@@ -89,8 +102,9 @@
                             <label for="condition">{{ __('Manufacturer:') }}</label>
                             <div class="form-check">
                                 @foreach ($manufacturers as $manufacturer)
-                                    <span class="{{ !$loop->first ? 'ml-5' : ''}}">
-                                        <input class="form-check-input" type="checkbox" name="manufacturers[]" value="{{ $manufacturer->id }}" id="{{ $manufacturer->id }}_manu">
+                                    <span class="{{ !$loop->first ? 'ml-5' : '' }}">
+                                        <input class="form-check-input" type="checkbox" name="manufacturers[]"
+                                            value="{{ $manufacturer->id }}" id="{{ $manufacturer->id }}_manu">
                                         <label class="form-check-label" for="{{ $manufacturer->id }}_manu">
                                             {{ $manufacturer->name }}
                                         </label>

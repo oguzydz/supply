@@ -25,7 +25,12 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group two">
-                                            <input type="text" class="form-control" placeholder="Model" name="model">
+                                            <div class="form-group">
+                                                <select name="model">
+                                                    <option value="used">Used</option>
+                                                    <option value="unused">Unused</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -86,7 +91,7 @@
     </section>
 
     <section class="feature-area pb-100">
-        <div class="container-fluid">
+        <div class="container">
             <div class="section-title three">
                 <div class="sub-title-wrap">
                     <img src="{{ asset(config('fmp.title_img')) }}" alt="Icon">
@@ -95,32 +100,22 @@
                 <h2>Select Manufacturer</h2>
             </div>
             <div class="row">
-                <div class="col-sm-6 col-lg-3">
+
+                @foreach ($manufacturers as $manufacturer)
+                <div class="col-sm-6 col-lg-4">
                     <div class="feature-item">
-                        <a href="job-details.html">
-                            <img src="https://image.flaticon.com/icons/png/512/2311/2311634.png" alt="Feature">
+                        <a href="{{route('filterRequestManufacturer', [$manufacturer->id])}}">
+                            <img src="/assets/img/manufactures.jpg" alt="Feature">
                         </a>
                         <div class="bottom">
                             <h3>
-                                <a href="job-details.html">Test Manu</a>
+                                <a href="{{route('filterRequestManufacturer', [$manufacturer->id])}}">{{$manufacturer->name}}</a>
                             </h3>
-                            <span>Send Request</span>
+                            <span>See Request on {{$manufacturer->name}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-3">
-                    <div class="feature-item">
-                        <a href="job-details.html">
-                            <img src="https://image.flaticon.com/icons/png/512/2311/2311634.png" alt="Feature">
-                        </a>
-                        <div class="bottom">
-                            <h3>
-                                <a href="job-details.html">Test Manu</a>
-                            </h3>
-                            <span>Send Request</span>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

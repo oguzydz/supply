@@ -11,6 +11,9 @@ use App\Http\Requests\RequestRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SupplyRequest;
 use App\Models\Brand;
+use App\Models\RequestsManufacturer;
+use Illuminate\Support\Arr;
+
 class RequestController extends Controller
 {
     /**
@@ -32,7 +35,6 @@ class RequestController extends Controller
     {
         $requests = SupplyRequest::all();
         $title = 'All Requests';
-
 
         return view('request.all')->with(compact('requests', 'title'));
     }
@@ -61,10 +63,11 @@ class RequestController extends Controller
     {
         $conditions = Condition::all();
         $manufacturers = Manufacturer::all();
+        $brands = Brand::all();
         $title = 'Basic Info';
 
         return view('request.create')->with(
-            compact('title', 'manufacturers', 'conditions')
+            compact('title', 'manufacturers', 'conditions', 'brands')
         );
     }
 
@@ -131,7 +134,7 @@ class RequestController extends Controller
 
         $title = 'Filtered Requests';
 
-        return view('request.all')->with(compact('requests'));
+        return view('request.all')->with(compact('requests', 'title'));
     }
 
     /**
@@ -140,9 +143,24 @@ class RequestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function manufacturer($id)
     {
-        //
+        $manufacturers = RequestsManufacturer::where(
+            'manufacturer_id',
+            $id
+        )->get();
+
+        
+
+        foreach ($manufacturers as $manufacturer) {
+            $ids[] = $manufacturer->request_id;
+        }
+
+        $requests = SupplyRequest::findMany($ids);
+
+        $title = 'List of Manufacturers';
+
+        return view('request.all')->with(compact('requests', 'title'));
     }
 
     /**
@@ -155,6 +173,18 @@ class RequestController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function quotation(Request $request, $id)
+    {
+        return 'sad';
     }
 
     /**
